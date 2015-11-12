@@ -18,11 +18,13 @@ class MakeMigration {
     use MakerTrait;
 
     protected $scaffoldCommandObj;
+    protected $className;
 
     public function __construct(ScaffoldMakeCommand $scaffoldCommand, Filesystem $files)
     {
         $this->files = $files;
         $this->scaffoldCommandObj = $scaffoldCommand;
+        $this->className = ucwords(camel_case('Create'.str_plural($this->scaffoldCommandObj->argument('name')).'Table'));
 
         $this->start();
     }
@@ -33,9 +35,9 @@ class MakeMigration {
         $name = 'create_'.str_plural(strtolower( $this->scaffoldCommandObj->argument('name') )).'_table';
 
         // Verifica se o arquivo existe com o mesmo o nome
-        if ($this->files->exists($path = $this->getPath($name)))
+        if ($this->files->exists($path = $this->getPath($name)) || class_exists($this->className))
         {
-            return $this->scaffoldCommandObj->error($this->type.' already exists!');
+            return $this->scaffoldCommandObj->error($this->className.' already exists!');
         }
 
         // Cria a pasta caso nao exista
@@ -90,8 +92,7 @@ class MakeMigration {
      */
     protected function replaceClassName(&$stub)
     {
-        $className = ucwords(camel_case('Create'.str_plural($this->scaffoldCommandObj->argument('name')).'Table'));
-        $stub = str_replace('{{class}}', $className, $stub);
+        $stub = str_replace('{{class}}', $this->className, $stub);
 
         return $this;
     }
