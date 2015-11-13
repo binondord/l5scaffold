@@ -32,7 +32,7 @@ class ScaffoldModelCommand extends Command {
      *
      * @var string
      */
-    protected $description = "Makes table, controller, model, views, seeds, and repository from file";
+    protected $description = "Makes table, controller, model, views, seeds, and repository for model";
 
     /**
      * Meta information for the requested migration.

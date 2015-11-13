@@ -25,14 +25,14 @@ class ScaffoldUpdateCommand extends Command {
      *
      * @var string
      */
-    protected $name = 'scaffold:file';
+    protected $name = 'scaffold:update';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = "Makes table, controller, model, views, seeds, and repository from file";
+    protected $description = "Update model and database schema based on changes to models file";
 
     /**
      * Meta information for the requested migration.
