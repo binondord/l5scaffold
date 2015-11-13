@@ -54,7 +54,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
                 return $app[$class];
             });
 
-            Artisan::resolve($bindname);
+            $this->commands($bindname);
         }
 	}
 
