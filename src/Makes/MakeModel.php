@@ -52,10 +52,10 @@ class MakeModel {
 
     private function showInformation()
     {
-        $this->info('MyNamespace\Book title:string year:integer');
-        $this->info('With relation: Book belongsTo Author title:string published:integer');
-        $this->info('Multiple relations: University hasMany Course, Department name:string city:string state:string homepage:string )');
-        $this->info('Or group like properties: University hasMany Department string( name city state homepage )');
+        $this->scaffoldCommandObj->info('MyNamespace\Book title:string year:integer');
+        $this->scaffoldCommandObj->info('With relation: Book belongsTo Author title:string published:integer');
+        $this->scaffoldCommandObj->info('Multiple relations: University hasMany Course, Department name:string city:string state:string homepage:string )');
+        $this->scaffoldCommandObj->info('Or group like properties: University hasMany Department string( name city state homepage )');
     }
 
     /**
@@ -65,7 +65,7 @@ class MakeModel {
      */
     private function askForModelAndFields()
     {
-        $modelAndFields = $this->command->ask('Add model with its relations and fields or type "q" to quit (type info for examples) ');
+        $modelAndFields = $this->scaffoldCommandObj->ask('Add model with its relations and fields or type "q" to quit (type info for examples) ');
 
         if($modelAndFields == "info")
         {
