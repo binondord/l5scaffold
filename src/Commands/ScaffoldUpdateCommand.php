@@ -81,7 +81,7 @@ class ScaffoldUpdateCommand extends Command {
      */
     public function fire()
     {
-
+        $this->prepUpdateFire();
     }
 
     /**
@@ -92,7 +92,7 @@ class ScaffoldUpdateCommand extends Command {
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The name of the model. (Ex: Post)'],
+            ['name', InputArgument::OPTIONAL, 'The name of the model. (Ex: Post)'],
         ];
     }
 

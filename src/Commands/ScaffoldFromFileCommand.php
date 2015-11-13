@@ -81,7 +81,7 @@ class ScaffoldFromFileCommand extends Command {
      */
     public function fire()
     {
-
+        $this->prepFileFire();
     }
 
     /**
@@ -92,7 +92,7 @@ class ScaffoldFromFileCommand extends Command {
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The name of the model. (Ex: Post)'],
+            ['file', InputArgument::REQUIRED, 'The filename of the model definition.'],
         ];
     }
 
