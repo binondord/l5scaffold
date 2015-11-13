@@ -13,6 +13,7 @@ use Illuminate\Filesystem\Filesystem;
 use Laralib\L5scaffold\Commands\ScaffoldMakeCommand;
 use Laralib\L5scaffold\Migrations\SchemaParser;
 use Laralib\L5scaffold\Migrations\SyntaxBuilder;
+use Laralib\L5scaffold\Traits\MakerTrait;
 
 class MakeMigration {
     use MakerTrait;
