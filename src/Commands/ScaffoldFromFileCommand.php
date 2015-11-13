@@ -35,6 +35,46 @@ class ScaffoldFromFileCommand extends Command {
     protected $description = "Makes table, controller, model, views, seeds, and repository from file";
 
     /**
+     * Meta information for the requested migration.
+     *
+     * @var array
+     */
+    protected $meta;
+
+    /**
+     * @var Composer
+     */
+    private $composer;
+
+    /**
+     * Views to generate
+     *
+     * @var array
+     */
+    private $views = ['index', 'create', 'show', 'edit'];
+
+    /**
+     * Store name from Model
+     * @var string
+     */
+    private $nameModel = "";
+
+    /**
+     * Create a new command instance.
+     *
+     * @param Filesystem $files
+     * @param Composer $composer
+     */
+    public function __construct(Filesystem $files, Composer $composer)
+    {
+        parent::__construct();
+
+
+        $this->files = $files;
+        $this->composer = $composer;
+    }
+
+    /**
      * Execute the console command.
      *
      * @return mixed
