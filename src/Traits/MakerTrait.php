@@ -21,7 +21,7 @@ trait MakerTrait {
         $this->files = $files;
         $this->scaffoldCommandM = $scaffoldCommand;
 
-        $this->generateNames($scaffoldCommand);
+        #$this->generateNames($scaffoldCommand);
     }
 
 
