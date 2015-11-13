@@ -10,10 +10,10 @@ namespace Laralib\L5scaffold\Makes;
 
 
 use Illuminate\Filesystem\Filesystem;
-use Laralib\L5scaffold\Commands\ScaffoldMakeCommand;
 use Laralib\L5scaffold\Migrations\SchemaParser;
 use Laralib\L5scaffold\Migrations\SyntaxBuilder;
 use Laralib\L5scaffold\Traits\MakerTrait;
+use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
 
 class MakeView
 {
@@ -24,7 +24,7 @@ class MakeView
     protected $viewName;
 
 
-    public function __construct(ScaffoldMakeCommand $scaffoldCommand, Filesystem $files, $viewName)
+    public function __construct(ScaffoldCommandInterface $scaffoldCommand, Filesystem $files, $viewName)
     {
         $this->files = $files;
         $this->scaffoldCommandObj = $scaffoldCommand;

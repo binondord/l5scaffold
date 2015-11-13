@@ -7,7 +7,7 @@ use Laralib\L5scaffold\Commands\ScaffoldMakeCommand;
 use Laralib\L5scaffold\Migrations\SchemaParser;
 use Laralib\L5scaffold\Migrations\SyntaxBuilder;
 use Laralib\L5scaffold\Traits\MakerTrait;
-
+use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
 
 class MakeController
 {

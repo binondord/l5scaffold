@@ -16,8 +16,10 @@ use Laralib\L5scaffold\Makes\MakeSeed;
 use Laralib\L5scaffold\Makes\MakeView;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
 
-class ScaffoldFromFileCommand extends Command {
+class ScaffoldFromFileCommand extends Command implements ScaffoldCommandInterface
+{
     use AppNamespaceDetectorTrait, MakerTrait, CommonTrait;
 
     /**

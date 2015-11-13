@@ -2,6 +2,8 @@
 
 namespace Laralib\L5scaffold\Traits;
 
+use Laralib\L5scaffold\Makes\MakeModel;
+
 trait CommonTrait {
     protected function useUtf8Encoding($argument)
     {

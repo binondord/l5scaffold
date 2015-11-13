@@ -16,8 +16,10 @@ use Laralib\L5scaffold\Makes\MakeSeed;
 use Laralib\L5scaffold\Makes\MakeView;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
 
-class ScaffoldModelCommand extends Command {
+class ScaffoldModelCommand extends Command implements ScaffoldCommandInterface
+{
     use AppNamespaceDetectorTrait, MakerTrait, CommonTrait;
 
     /**
@@ -82,6 +84,7 @@ class ScaffoldModelCommand extends Command {
     public function fire()
     {
         $this->prepFire();
+        $this->makeModel();
         $this->dumpAutoload();
     }
 

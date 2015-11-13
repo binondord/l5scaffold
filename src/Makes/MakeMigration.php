@@ -10,10 +10,10 @@ namespace Laralib\L5scaffold\Makes;
 
 
 use Illuminate\Filesystem\Filesystem;
-use Laralib\L5scaffold\Commands\ScaffoldMakeCommand;
 use Laralib\L5scaffold\Migrations\SchemaParser;
 use Laralib\L5scaffold\Migrations\SyntaxBuilder;
 use Laralib\L5scaffold\Traits\MakerTrait;
+use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
 
 class MakeMigration {
     use MakerTrait;
@@ -21,7 +21,7 @@ class MakeMigration {
     protected $scaffoldCommandObj;
     protected $className;
 
-    public function __construct(ScaffoldMakeCommand $scaffoldCommand, Filesystem $files)
+    public function __construct(ScaffoldCommandInterface $scaffoldCommand, Filesystem $files)
     {
         $this->files = $files;
         $this->scaffoldCommandObj = $scaffoldCommand;
