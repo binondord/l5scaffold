@@ -25,7 +25,7 @@ class ScaffoldModelCommand extends Command {
      *
      * @var string
      */
-    protected $name = 'scaffold:file';
+    protected $name = 'scaffold:model';
 
     /**
      * The console command description.
