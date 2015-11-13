@@ -25,7 +25,7 @@ class ScaffoldMakeCommand extends Command
      *
      * @var string
      */
-    protected $name = 'make:scaffold';
+    protected $name = 'scaffold:make';
 
     /**
      * The console command description.
