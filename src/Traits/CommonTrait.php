@@ -128,8 +128,6 @@ trait CommonTrait {
 
         $this->info('Views created successfully.');
 
-        $this->dumpAutoload();
-
         $this->info('Route::resource("'.$this->getObjName("names").'","'.$this->getObjName("Name").'Controller"); // Add this line in routes.php');
 
     }
