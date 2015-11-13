@@ -82,6 +82,7 @@ class ScaffoldModelCommand extends Command {
     public function fire()
     {
         $this->prepFire();
+        $this->dumpAutoload();
     }
 
     /**

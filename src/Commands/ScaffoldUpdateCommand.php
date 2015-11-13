@@ -82,6 +82,7 @@ class ScaffoldUpdateCommand extends Command {
     public function fire()
     {
         $this->prepUpdateFire();
+        $this->dumpAutoload();
     }
 
     /**

@@ -82,6 +82,8 @@ class ScaffoldFromFileCommand extends Command {
     public function fire()
     {
         $this->prepFileFire();
+
+        $this->dumpAutoload();
     }
 
     /**
