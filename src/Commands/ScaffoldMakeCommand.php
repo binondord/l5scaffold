@@ -10,9 +10,9 @@ use Laralib\L5scaffold\Makes\MakeController;
 use Laralib\L5scaffold\Makes\MakeLayout;
 use Laralib\L5scaffold\Makes\MakeMigration;
 use Laralib\L5scaffold\Makes\MakeModel;
-use Laralib\L5scaffold\Makes\MakerTrait;
 use Laralib\L5scaffold\Makes\MakeSeed;
 use Laralib\L5scaffold\Makes\MakeView;
+use Laralib\L5scaffold\Traits\MakerTrait;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
