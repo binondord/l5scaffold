@@ -2,6 +2,7 @@
 
 namespace Laralib\L5scaffold;
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\ServiceProvider;
 
 class GeneratorsServiceProvider extends ServiceProvider {
@@ -35,11 +36,26 @@ class GeneratorsServiceProvider extends ServiceProvider {
 	 */
 	private function registerScaffoldGenerator()
 	{
-		$this->app->singleton('command.larascaf.scaffold', function ($app) {
-			return $app['Laralib\L5scaffold\Commands\ScaffoldMakeCommand'];
-		});
+        $nameBase = 'command.larascaf.';
+        $namespace = 'Laralib\\L5scaffold\\Commands\\';
 
-		$this->commands('command.larascaf.scaffold');
+        $cmds = [
+            'scaffoldmake' => 'ScaffoldMakeCommand',
+            'scaffoldmodel' => 'ScaffoldModelCommand',
+            'scaffoldupdate' => 'ScaffoldUpdateCommand',
+            'scaffoldfile' => 'ScaffoldFileCommand',
+        ];
+
+        foreach($cmds as $name => $className)
+        {
+            $class = $namespace.$className;
+            $bindname = $nameBase.$name;
+            $this->app->singleton($bindname, function ($app) use($class){
+                return $app[$class];
+            });
+
+            Artisan::resolve($bindname);
+        }
 	}
 
 
