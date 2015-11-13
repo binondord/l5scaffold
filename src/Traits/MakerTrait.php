@@ -1,15 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: fernandobritofl
- * Date: 4/21/15
- * Time: 5:00 PM
- */
-
-namespace Laralib\L5scaffold\Makes;
-
-
-
+<?php namespace Laralib\L5scaffold\Traits;
 
 use Illuminate\Filesystem\Filesystem;
 use Laralib\L5scaffold\Commands\ScaffoldMakeCommand;

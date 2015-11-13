@@ -31,11 +31,18 @@ class MakeModel {
         $modelPath = $this->getPath($name, 'model');
 
         if (! $this->files->exists($modelPath)) {
-            $this->scaffoldCommandObj->call('make:model', [
-                'name' => $name
-            ]);
+            if ($this->scaffoldCommandObj->confirm($modelPath . ' already exists! Do you wish to overwrite? [yes|no]')) {
+                // Put file
+                $this->files->put($modelPath, $this->compileModelStub($name));
+            }
+        }else{
+            $this->files->put($modelPath, $this->compileModelStub($name));
         }
 
     }
 
+    protected function compileModelStub($name)
+    {
+
+    }
 }
