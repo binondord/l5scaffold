@@ -43,7 +43,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
             'scaffoldmake' => 'ScaffoldMakeCommand',
             'scaffoldmodel' => 'ScaffoldModelCommand',
             'scaffoldupdate' => 'ScaffoldUpdateCommand',
-            'scaffoldfile' => 'ScaffoldFileCommand',
+            'scaffoldfile' => 'ScaffoldFromFileCommand',
         ];
 
         foreach($cmds as $name => $className)
