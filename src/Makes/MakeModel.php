@@ -14,13 +14,13 @@ use Laralib\L5scaffold\Commands\ScaffoldMakeCommand;
 use Laralib\L5scaffold\Traits\MakerTrait;
 use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
 
-class MakeModel {
+class MakeModel extends BaseMake
+{
     use MakerTrait;
 
-    public function __construct(ScaffoldCommandInterface $scaffoldCommand, Filesystem $files)
+    function __construct(ScaffoldCommandInterface $command, Filesystem $files)
     {
-        $this->files = $files;
-        $this->scaffoldCommandObj = $scaffoldCommand;
+        parent::__construct($command, $files);
 
         $this->start();
     }
@@ -29,15 +29,15 @@ class MakeModel {
     protected function start()
     {
 
-        $name = $this->scaffoldCommandObj->getObjName('Name');
-        $modelPath = $this->getPath($name, 'model');
+        list($name, $modelPath) = $this->command->getModelPath();
 
-        if (! $this->files->exists($modelPath)) {
-            if ($this->scaffoldCommandObj->confirm($modelPath . ' already exists! Do you wish to overwrite? [yes|no]')) {
+        if ($this->files->exists($modelPath)) {
+            if ($this->command->confirm($modelPath .' - '. $name.' already exists! Do you wish to overwrite? [yes|no]')) {
                 // Put file
                 $this->files->put($modelPath, $this->compileModelStub($name));
             }
         }else{
+
             $this->files->put($modelPath, $this->compileModelStub($name));
         }
 
@@ -48,14 +48,18 @@ class MakeModel {
         $modelAndProperties = $this->askForModelAndFields();
 
         $moreTables = trim($modelAndProperties) == "q" ? false : true;
+
+        $this->saveModelAndProperties($modelAndProperties, array());
+
+        #return $this->command->processClass($name);
     }
 
     private function showInformation()
     {
-        $this->scaffoldCommandObj->info('MyNamespace\Book title:string year:integer');
-        $this->scaffoldCommandObj->info('With relation: Book belongsTo Author title:string published:integer');
-        $this->scaffoldCommandObj->info('Multiple relations: University hasMany Course, Department name:string city:string state:string homepage:string )');
-        $this->scaffoldCommandObj->info('Or group like properties: University hasMany Department string( name city state homepage )');
+        $this->command->info('MyNamespace\Book title:string year:integer');
+        $this->command->info('With relation: Book belongsTo Author title:string published:integer');
+        $this->command->info('Multiple relations: University hasMany Course, Department name:string city:string state:string homepage:string )');
+        $this->command->info('Or group like properties: University hasMany Department string( name city state homepage )');
     }
 
     /**
@@ -65,15 +69,28 @@ class MakeModel {
      */
     private function askForModelAndFields()
     {
-        $modelAndFields = $this->scaffoldCommandObj->ask('Add model with its relations and fields or type "q" to quit (type info for examples) ');
+        $modelAndFields = $this->command->ask('Add model with its relations and fields or type "q" to quit (type info for examples) ');
 
         if($modelAndFields == "info")
         {
             $this->showInformation();
 
-            $modelAndFields = $this->scaffoldCommandObj->ask('Now your turn: ');
+            $modelAndFields = $this->command->ask('Now your turn: ');
         }
 
         return $modelAndFields;
+    }
+
+    /**
+     *  Save the model and its properties
+     *
+     * @param $modelAndProperties
+     * @param $oldModelFile
+     * @param bool $storeInArray
+     */
+    private function saveModelAndProperties($modelAndProperties, $oldModelFile, $storeInArray = true)
+    {
+        
+
     }
 }

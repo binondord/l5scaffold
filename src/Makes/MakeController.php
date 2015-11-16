@@ -1,5 +1,4 @@
-<?php
-namespace Laralib\L5scaffold\Makes;
+<?php namespace Laralib\L5scaffold\Makes;
 
 use Illuminate\Console\AppNamespaceDetectorTrait;
 use Illuminate\Filesystem\Filesystem;
@@ -9,42 +8,30 @@ use Laralib\L5scaffold\Migrations\SyntaxBuilder;
 use Laralib\L5scaffold\Traits\MakerTrait;
 use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
 
-class MakeController
+class MakeController extends BaseMake
 {
     use AppNamespaceDetectorTrait, MakerTrait;
 
-
-
-    protected $scaffoldCommandObj;
-
-    function __construct(ScaffoldMakeCommand $scaffoldCommand, Filesystem $files)
+    function __construct(ScaffoldCommandInterface $command, Filesystem $files)
     {
-        $this->files = $files;
-        $this->scaffoldCommandObj = $scaffoldCommand;
+        parent::__construct($command, $files);
 
         $this->start();
-
     }
 
     private function start()
     {
-        // Cria o nome do arquivo do controller // TweetController
+        $name = $this->command->getObjName('Name') . 'Controller';
 
-
-        $name = $this->scaffoldCommandObj->getObjName('Name') . 'Controller';
-
-        // Verifica se o arquivo existe com o mesmo o nome
         if ($this->files->exists($path = $this->getPath($name))) {
-            return $this->scaffoldCommandObj->error($name . ' already exists!');
+            return $this->command->error($name . ' already exists!');
         }
 
-        // Cria a pasta caso nao exista
         $this->makeDirectory($path);
 
-        // Grava o arquivo
         $this->files->put($path, $this->compileControllerStub());
 
-        $this->scaffoldCommandObj->info('Controller created successfully.');
+        $this->command->info('Controller created successfully.');
 
         //$this->composer->dumpAutoloads();
     }
@@ -81,7 +68,7 @@ class MakeController
     protected function replaceClassName(&$stub)
     {
 
-        $className = $this->scaffoldCommandObj->getObjName('Name') . 'Controller';
+        $className = $this->command->getObjName('Name') . 'Controller';
         $stub = str_replace('{{class}}', $className, $stub);
 
         return $this;
@@ -97,7 +84,7 @@ class MakeController
     private function replaceModelPath(&$stub)
     {
 
-        $model_name = $this->getAppNamespace() . $this->scaffoldCommandObj->getObjName('Name');
+        $model_name = $this->getAppNamespace() . $this->command->getObjName('Name');
         $stub = str_replace('{{model_path}}', $model_name, $stub);
 
         return $this;
@@ -107,9 +94,9 @@ class MakeController
 
     private function replaceModelName(&$stub)
     {
-        $model_name_uc = $this->scaffoldCommandObj->getObjName('Name');
-        $model_name = $this->scaffoldCommandObj->getObjName('name');
-        $model_names = $this->scaffoldCommandObj->getObjName('names');
+        $model_name_uc = $this->command->getObjName('Name');
+        $model_name = $this->command->getObjName('name');
+        $model_names = $this->command->getObjName('names');
 
         $stub = str_replace('{{model_name_class}}', $model_name_uc, $stub);
         $stub = str_replace('{{model_name_var_sgl}}', $model_name, $stub);
@@ -129,13 +116,13 @@ class MakeController
     protected function replaceSchema(&$stub, $type = 'migration')
     {
 
-        if ($schema = $this->scaffoldCommandObj->option('schema')) {
+        if ($schema = $this->command->option('schema')) {
             $schema = (new SchemaParser)->parse($schema);
         }
 
 
         // Create controllers fields
-        $schema = (new SyntaxBuilder)->create($schema, $this->scaffoldCommandObj->getMeta(), 'controller');
+        $schema = (new SyntaxBuilder)->create($schema, $this->command->getMeta(), 'controller');
         $stub = str_replace('{{model_fields}}', $schema, $stub);
 
 

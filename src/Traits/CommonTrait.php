@@ -5,43 +5,11 @@ namespace Laralib\L5scaffold\Traits;
 use Laralib\L5scaffold\Makes\MakeModel;
 
 trait CommonTrait {
+    protected $commandContract = Laralib\L5scaffold\Contracts\ScaffoldCommandInterface::class;
+
     protected function useUtf8Encoding($argument)
     {
         return iconv(mb_detect_encoding($argument, mb_detect_order(), true), "UTF-8", $argument);
-    }
-
-    /**
-     * Generate names
-     *
-     * @param string $config
-     * @return mixed
-     * @throws \Exception
-     */
-    public function getObjName($config = 'Name')
-    {
-
-        $names = [];
-        $args_name = $this->argument('name');
-
-
-        // Name[0] = Tweet
-        $names['Name'] = str_singular(ucfirst($args_name));
-        // Name[1] = Tweets
-        $names['Names'] = str_plural(ucfirst($args_name));
-        // Name[2] = tweets
-        $names['names'] = str_plural(strtolower(preg_replace('/(?<!^)([A-Z])/', '_$1', $args_name)));
-        // Name[3] = tweet
-        $names['name'] = str_singular(strtolower(preg_replace('/(?<!^)([A-Z])/', '_$1', $args_name)));
-
-
-        if (!isset($names[$config])) {
-            throw new \Exception("Position name is not found");
-        };
-
-
-        return $names[$config];
-
-
     }
 
     public function getModelDefinitionFile()
@@ -63,7 +31,7 @@ trait CommonTrait {
      */
     protected function makeModel()
     {
-        new MakeModel($this, $this->files);
+        \App::make(MakeModel::class, [$this]);
     }
 
 
@@ -74,35 +42,6 @@ trait CommonTrait {
     {
         new MakeSeed($this, $this->files);
     }
-
-
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    protected function getArguments()
-    {
-        return [
-            ['name', InputArgument::REQUIRED, 'The name of the model. (Ex: Post)'],
-        ];
-    }
-
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
-    {
-        return [
-            ['schema', 's', InputOption::VALUE_REQUIRED, 'Schema to generate scaffold files. (Ex: --schema="title:string")', null],
-            ['form', 'f', InputOption::VALUE_OPTIONAL, 'Use Illumintate/Html Form facade to generate input fields', false]
-        ];
-    }
-
 
     /**
      * Make a Controller with default actions
@@ -132,12 +71,6 @@ trait CommonTrait {
 
         $this->info('Route::resource("'.$this->getObjName("names").'","'.$this->getObjName("Name").'Controller"); // Add this line in routes.php');
 
-    }
-
-    protected function dumpAutoload()
-    {
-        $this->info('Dump-autoload...');
-        $this->composer->dumpAutoloads();
     }
 
 

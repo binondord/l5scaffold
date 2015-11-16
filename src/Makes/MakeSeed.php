@@ -13,14 +13,13 @@ use Illuminate\Filesystem\Filesystem;
 use Laralib\L5scaffold\Commands\ScaffoldMakeCommand;
 use Laralib\L5scaffold\Traits\MakerTrait;
 
-class MakeSeed
+class MakeSeed extends BaseMake
 {
     use MakerTrait;
 
-    public function __construct(ScaffoldMakeCommand $scaffoldCommand, Filesystem $files)
+    function __construct(ScaffoldCommandInterface $command, Filesystem $files)
     {
-        $this->files = $files;
-        $this->scaffoldCommandObj = $scaffoldCommand;
+        parent::__construct($command, $files);
 
         $this->start();
     }
@@ -31,7 +30,7 @@ class MakeSeed
 
 
         // Get path
-        $path = $this->getPath($this->scaffoldCommandObj->getObjName('Name') . 'TableSeeder', 'seed');
+        $path = $this->getPath($this->command->getObjName('Name') . 'TableSeeder', 'seed');
 
 
         // Create directory
@@ -39,7 +38,7 @@ class MakeSeed
 
 
         if ($this->files->exists($path)) {
-            if ($this->scaffoldCommandObj->confirm($path . ' already exists! Do you wish to overwrite? [yes|no]')) {
+            if ($this->command->confirm($path . ' already exists! Do you wish to overwrite? [yes|no]')) {
                 // Put file
                 $this->files->put($path, $this->compileSeedStub());
                 $this->getSuccessMsg();
@@ -57,7 +56,7 @@ class MakeSeed
 
     protected function getSuccessMsg()
     {
-        $this->scaffoldCommandObj->info('Seed created successfully.');
+        $this->command->info('Seed created successfully.');
     }
 
 
@@ -79,7 +78,7 @@ class MakeSeed
 
     private function replaceClassName(&$stub)
     {
-        $name = $this->scaffoldCommandObj->getObjName('Name');
+        $name = $this->command->getObjName('Name');
 
         $stub = str_replace('{{class}}', $name, $stub);
 

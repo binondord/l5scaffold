@@ -32,7 +32,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
 
 
 	/**
-	 * Register the make:scaffold generator.
+	 * Register the commands.
 	 */
 	private function registerScaffoldGenerator()
 	{

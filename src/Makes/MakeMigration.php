@@ -15,17 +15,24 @@ use Laralib\L5scaffold\Migrations\SyntaxBuilder;
 use Laralib\L5scaffold\Traits\MakerTrait;
 use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
 
-class MakeMigration {
+class MakeMigration extends BaseMake
+{
     use MakerTrait;
 
-    protected $scaffoldCommandObj;
     protected $className;
 
-    public function __construct(ScaffoldCommandInterface $scaffoldCommand, Filesystem $files)
+    function __construct(ScaffoldCommandInterface $command, Filesystem $files)
+    {
+        parent::__construct($command, $files);
+
+        $this->start();
+    }
+
+    public function __construct(ScaffoldCommandInterface $command, Filesystem $files)
     {
         $this->files = $files;
-        $this->scaffoldCommandObj = $scaffoldCommand;
-        $this->className = ucwords(camel_case('Create'.str_plural($this->scaffoldCommandObj->argument('name')).'Table'));
+        $this->command = $command;
+        $this->className = ucwords(camel_case('Create'.str_plural($this->command->argument('name')).'Table'));
 
         $this->start();
     }
@@ -33,12 +40,12 @@ class MakeMigration {
 
     protected function start(){
         // Cria o nome do arquivo do migration // create_tweets_table
-        $name = 'create_'.str_plural(strtolower( $this->scaffoldCommandObj->argument('name') )).'_table';
+        $name = 'create_'.str_plural(strtolower( $this->command->argument('name') )).'_table';
 
         // Verifica se o arquivo existe com o mesmo o nome
         if ($this->files->exists($path = $this->getPath($name)) || class_exists($this->className))
         {
-            return $this->scaffoldCommandObj->error($this->className.' already exists!');
+            return $this->command->error($this->className.' already exists!');
         }
 
         // Cria a pasta caso nao exista
@@ -47,7 +54,7 @@ class MakeMigration {
         // Grava o arquivo
         $this->files->put($path, $this->compileMigrationStub());
 
-        $this->scaffoldCommandObj->info('Migration created successfully');
+        $this->command->info('Migration created successfully');
     }
 
 
@@ -106,7 +113,7 @@ class MakeMigration {
      */
     protected function replaceTableName(&$stub)
     {
-        $table = $this->scaffoldCommandObj->getMeta()['table'];
+        $table = $this->command->getMeta()['table'];
         $stub = str_replace('{{table}}', $table, $stub);
 
         return $this;
@@ -121,20 +128,20 @@ class MakeMigration {
      */
     protected function replaceSchema(&$stub, $type='migration')
     {
-        if ($schema = $this->scaffoldCommandObj->option('schema')) {
+        if ($schema = $this->command->option('schema')) {
             $schema = (new SchemaParser)->parse($schema);
         }
 
 
         if($type == 'migration'){
             // Create migration fields
-            $schema = (new SyntaxBuilder)->create($schema, $this->scaffoldCommandObj->getMeta());
+            $schema = (new SyntaxBuilder)->create($schema, $this->command->getMeta());
             $stub = str_replace(['{{schema_up}}', '{{schema_down}}'], $schema, $stub);
 
 
         } else if($type='controller'){
             // Create controllers fields
-            $schema = (new SyntaxBuilder)->create($schema, $this->scaffoldCommandObj->getMeta(), 'controller');
+            $schema = (new SyntaxBuilder)->create($schema, $this->command->getMeta(), 'controller');
             $stub = str_replace('{{model_fields}}', $schema, $stub);
 
 

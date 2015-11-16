@@ -15,22 +15,21 @@ use Laralib\L5scaffold\Migrations\SyntaxBuilder;
 use Laralib\L5scaffold\Traits\MakerTrait;
 use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
 
-class MakeView
+class MakeView extends BaseMake
 {
     use MakerTrait;
 
-
-    protected $scaffoldCommandObj;
     protected $viewName;
 
-
-    public function __construct(ScaffoldCommandInterface $scaffoldCommand, Filesystem $files, $viewName)
+    function __construct(ScaffoldCommandInterface $command, Filesystem $files)
     {
-        $this->files = $files;
-        $this->scaffoldCommandObj = $scaffoldCommand;
-        $this->viewName = $viewName;
-
+        parent::__construct($command, $files);
         $this->start();
+    }
+
+    public function setView($viewName)
+    {
+        $this->viewName = $viewName;
     }
 
     private function start()
@@ -44,7 +43,7 @@ class MakeView
 
     protected function generateView($nameView = 'index'){
         // Get path
-        $path = $this->getPath($this->scaffoldCommandObj->getObjName('names'), 'view-'.$nameView);
+        $path = $this->getPath($this->command->getObjName('names'), 'view-'.$nameView);
 
 
         // Create directory
@@ -52,7 +51,7 @@ class MakeView
 
 
         if ($this->files->exists($path)) {
-            if ($this->scaffoldCommandObj->confirm($path . ' already exists! Do you wish to overwrite? [yes|no]')) {
+            if ($this->command->confirm($path . ' already exists! Do you wish to overwrite? [yes|no]')) {
                 // Put file
                 $this->files->put($path, $this->compileViewStub($nameView));
             }
