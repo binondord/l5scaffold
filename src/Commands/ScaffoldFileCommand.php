@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
 
-class ScaffoldFromFileCommand extends ScaffoldCommand implements ScaffoldCommandInterface
+class ScaffoldFileCommand extends ScaffoldCommand implements ScaffoldCommandInterface
 {
     use AppNamespaceDetectorTrait, CommonTrait;
 

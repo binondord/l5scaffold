@@ -34,29 +34,29 @@ class GeneratorsServiceProvider extends ServiceProvider {
 	/**
 	 * Register the commands.
 	 */
-	private function registerScaffoldGenerator()
-	{
+    private function registerScaffoldGenerator()
+    {
         $nameBase = 'command.larascaf.';
         $namespace = 'Laralib\\L5scaffold\\Commands\\';
 
-        $cmds = [
-            'scaffoldmake' => 'ScaffoldMakeCommand',
-            'scaffoldmodel' => 'ScaffoldModelCommand',
-            'scaffoldupdate' => 'ScaffoldUpdateCommand',
-            'scaffoldfile' => 'ScaffoldFromFileCommand',
+        $commands = [
+            'make',
+            'model',
+            'update',
+            'file',
         ];
 
-        foreach($cmds as $name => $className)
+        foreach($commands as $command)
         {
-            $class = $namespace.$className;
-            $bindname = $nameBase.$name;
+            $class = $namespace.'Scaffold'.ucfirst($command).'Command';
+            $bindname = $nameBase.'scaffold'.$command;
             $this->app->singleton($bindname, function ($app) use($class){
                 return $app[$class];
             });
 
             $this->commands($bindname);
         }
-	}
-
+    }
 
 }
+
