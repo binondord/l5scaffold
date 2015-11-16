@@ -38,7 +38,7 @@ class ScaffoldModelCommand extends ScaffoldCommand implements ScaffoldCommandInt
      *
      * @return mixed
      */
-    public function fire()
+    public function handle()
     {
         $this->prepFire();
         $this->makeModel();
