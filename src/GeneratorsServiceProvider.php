@@ -14,7 +14,9 @@ class GeneratorsServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		//
+        $this->publishes([
+            __DIR__.'/config/l5scaffold.php' => config_path('l5scaffold.php'),
+        ]);
 
 	}
 

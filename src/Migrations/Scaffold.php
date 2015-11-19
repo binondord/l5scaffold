@@ -114,11 +114,11 @@ class Scaffold
      */
     private function getConfigSettings()
     {
-        $package = "laravel-scaffold";
+        $package = "l5scaffold";
 
         $configSettings = array();
 
-        $configSettings['pathTo'] = config("$package::paths");
+        $configSettings['pathTo'] = config("$package.paths");
 
         foreach($configSettings['pathTo'] as $pathName => $path)
         {
@@ -131,19 +131,19 @@ class Scaffold
             }
         }
 
-        $configSettings['names'] = config("$package::names");
+        $configSettings['names'] = config("$package.names");
 
-        $configSettings['appName'] = config("$package::appName");
+        $configSettings['appName'] = config("$package.appName");
 
-        $configSettings['downloads'] = config("$package::downloads");
+        $configSettings['downloads'] = config("$package.downloads");
 
-        $configSettings['views'] = config("$package::views");
+        $configSettings['views'] = config("$package.views");
 
-        $configSettings['useRepository'] = config("$package::repository");
+        $configSettings['useRepository'] = config("$package.repository");
 
-        $configSettings['useBaseRepository'] = config("$package::baseRepository");
+        $configSettings['useBaseRepository'] = config("$package.baseRepository");
 
-        $configSettings['modelDefinitionsFile'] = config("$package::modelDefinitionsFile");
+        $configSettings['modelDefinitionsFile'] = config("$package.modelDefinitionsFile");
 
         return $configSettings;
     }
