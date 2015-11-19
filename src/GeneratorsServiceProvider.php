@@ -19,7 +19,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
         ],'config');
 
         $this->publishes([
-            __DIR__.'/templates/' => base_path('resources'),
+            __DIR__.'/templates/' => base_path('resources/templates'),
         ],'templates');
 
 	}
