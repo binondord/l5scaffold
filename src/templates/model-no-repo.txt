@@ -1,6 +1,10 @@
-<?php [namespace]
+<?php
 
-class [Model] extends \Eloquent
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class [Model] extends Model
 {
     [content]
 

@@ -1,6 +1,8 @@
-<?php [namespace]
+<?php
 
-class [controller] extends \BaseController
+namespace App\Http\Controllers;
+
+class [controller] extends Controller
 {
 	protected $[model];
 
@@ -12,42 +14,42 @@ class [controller] extends \BaseController
 	public function getIndex()
 	{
     	$[models] = $this->[model]->all();
-        $this->layout->content = \View::make('[model].index', compact('[models]'));
+        return view('[model].index', compact('[models]'));
 	}
 
 	public function getCreate()
 	{
-        $this->layout->content = \View::make('[model].create');
+        return view('[model].create');
 	}
 
 	public function postIndex()
 	{
-        $this->[model]->store(\Input::only([repeat]'[property]',[/repeat]));
-        return \Redirect::to('[model]');
+        $this->[model]->store(\Request::only([repeat]'[property]',[/repeat]));
+        return redirect('[model]');
 	}
 
 	public function getDetails($id)
 	{
         $[model] = $this->[model]->find($id);
-        $this->layout->content = \View::make('[model].show')->with('[model]', $[model]);
+        return view('[model].show')->with('[model]', $[model]);
 	}
 
 	public function getEdit($id)
 	{
         $[model] = $this->[model]->find($id);
-        $this->layout->content = \View::make('[model].edit')->with('[model]', $[model]);
+        return view('[model].edit')->with('[model]', $[model]);
 	}
 
 	public function putUpdate($id)
 	{
-        $this->[model]->find($id)->update(\Input::only([repeat]'[property]',[/repeat]));
-        return \Redirect::to('[model]/details/'.$id);
+        $this->[model]->find($id)->update(\Request::only([repeat]'[property]',[/repeat]));
+        return redirect('[model]/details/'.$id);
 	}
 
 	public function deleteDelete($id)
 	{
         $this->[model]->destroy($id);
-        return \Redirect::to('[model]');
+        return redirect('[model]');
 	}
 
 }
