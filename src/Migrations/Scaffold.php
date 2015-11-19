@@ -102,7 +102,6 @@ class Scaffold
     public function __construct(Command $command)
     {
         $this->configSettings = $this->getConfigSettings();
-        dd($this->configSettings);
         $this->command = $command;
         $this->fileCreator = new FileCreator($command);
         $this->assetDownloader = new AssetDownloader($command, $this->configSettings, $this->fileCreator);
