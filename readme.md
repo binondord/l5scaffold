@@ -21,9 +21,29 @@ Open `config/app.php` and, to your **providers** array at the bottom, add:
 "Laralib\L5scaffold\GeneratorsServiceProvider"
 ```
 
+### Step 3: Publish vendor assets, config and templates
+
+Publish config and templates
+
+```
+php artisan vendor:publish --tag=config --force
+php artisan vendor:publish --tag=templates --force
+```
+
+### Step 3: Create modeldefinition file under app, default file name is "model.txt". Sample models with relationship
+
+```
+resource = true
+Dairy hasMany Equipment, hasMany WorkOrders, hasMany Orders name:string ,description:text
+WorkOrder belongsTo Dairy, hasMany WOItems ordered_by:string created_by:integer details:text scheduled_on:date finished_on:datetime status:string
+Equipment belongsTo Dairy name:string description:text
+Orders hasMany Product quantity:integer price:decimal extended:decimal status:string
+Products belongsToMany Order name:string description:text sku:string mfg_sku:string
+```
+
 ### Step 3: Run Artisan!
 
-You're all set. Run `php artisan` from the console, and you'll see the new commands `make:scaffold`.
+You're all set. Run `php artisan` from the console, and you'll see the new commands `scaffold:update`.
 
 ## Examples
 

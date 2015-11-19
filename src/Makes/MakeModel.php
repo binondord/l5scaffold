@@ -11,14 +11,16 @@ namespace Laralib\L5scaffold\Makes;
 
 use Illuminate\Filesystem\Filesystem;
 use Laralib\L5scaffold\Commands\ScaffoldMakeCommand;
+use Laralib\L5scaffold\Traits\MakerTrait;
+use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
 
-class MakeModel {
+class MakeModel extends BaseMake
+{
     use MakerTrait;
 
-    public function __construct(ScaffoldMakeCommand $scaffoldCommand, Filesystem $files)
+    function __construct(ScaffoldCommandInterface $command, Filesystem $files)
     {
-        $this->files = $files;
-        $this->scaffoldCommandObj = $scaffoldCommand;
+        parent::__construct($command, $files);
 
         $this->start();
     }
@@ -27,15 +29,68 @@ class MakeModel {
     protected function start()
     {
 
-        $name = $this->scaffoldCommandObj->getObjName('Name');
-        $modelPath = $this->getPath($name, 'model');
+        list($name, $modelPath) = $this->command->getModelPath();
 
-        if (! $this->files->exists($modelPath)) {
-            $this->scaffoldCommandObj->call('make:model', [
-                'name' => $name
-            ]);
+        if ($this->files->exists($modelPath)) {
+            if ($this->command->confirm($modelPath .' - '. $name.' already exists! Do you wish to overwrite? [yes|no]')) {
+                // Put file
+                $this->files->put($modelPath, $this->compileModelStub($name));
+            }
+        }else{
+
+            $this->files->put($modelPath, $this->compileModelStub($name));
         }
 
     }
 
+    protected function compileModelStub($name)
+    {
+        $modelAndProperties = $this->askForModelAndFields();
+
+        $moreTables = trim($modelAndProperties) == "q" ? false : true;
+
+        $this->saveModelAndProperties($modelAndProperties, array());
+
+        #return $this->command->processClass($name);
+    }
+
+    private function showInformation()
+    {
+        $this->command->info('MyNamespace\Book title:string year:integer');
+        $this->command->info('With relation: Book belongsTo Author title:string published:integer');
+        $this->command->info('Multiple relations: University hasMany Course, Department name:string city:string state:string homepage:string )');
+        $this->command->info('Or group like properties: University hasMany Department string( name city state homepage )');
+    }
+
+    /**
+     *  Prompt user for model and properties and return result
+     *
+     * @return string
+     */
+    private function askForModelAndFields()
+    {
+        $modelAndFields = $this->command->ask('Add model with its relations and fields or type "q" to quit (type info for examples) ');
+
+        if($modelAndFields == "info")
+        {
+            $this->showInformation();
+
+            $modelAndFields = $this->command->ask('Now your turn: ');
+        }
+
+        return $modelAndFields;
+    }
+
+    /**
+     *  Save the model and its properties
+     *
+     * @param $modelAndProperties
+     * @param $oldModelFile
+     * @param bool $storeInArray
+     */
+    private function saveModelAndProperties($modelAndProperties, $oldModelFile, $storeInArray = true)
+    {
+        
+
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Laralib\L5scaffold;
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\ServiceProvider;
 
 class GeneratorsServiceProvider extends ServiceProvider {
@@ -13,7 +14,13 @@ class GeneratorsServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		//
+        $this->publishes([
+            __DIR__.'/config/l5scaffold.php' => config_path('l5scaffold.php'),
+        ],'config');
+
+        $this->publishes([
+            __DIR__.'/templates/' => base_path('resources/templates'),
+        ],'templates');
 
 	}
 
@@ -31,16 +38,31 @@ class GeneratorsServiceProvider extends ServiceProvider {
 
 
 	/**
-	 * Register the make:scaffold generator.
+	 * Register the commands.
 	 */
-	private function registerScaffoldGenerator()
-	{
-		$this->app->singleton('command.larascaf.scaffold', function ($app) {
-			return $app['Laralib\L5scaffold\Commands\ScaffoldMakeCommand'];
-		});
+    private function registerScaffoldGenerator()
+    {
+        $nameBase = 'command.larascaf.';
+        $namespace = 'Laralib\\L5scaffold\\Commands\\';
 
-		$this->commands('command.larascaf.scaffold');
-	}
+        $commands = [
+            'make',
+            'model',
+            'update',
+            'file',
+        ];
 
+        foreach($commands as $command)
+        {
+            $class = $namespace.'Scaffold'.ucfirst($command).'Command';
+            $bindname = $nameBase.'scaffold'.$command;
+            $this->app->singleton($bindname, function ($app) use($class){
+                return $app[$class];
+            });
+
+            $this->commands($bindname);
+        }
+    }
 
 }
+

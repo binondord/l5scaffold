@@ -10,15 +10,16 @@ namespace Laralib\L5scaffold\Makes;
 
 
 use Illuminate\Filesystem\Filesystem;
-use Laralib\L5scaffold\Commands\ScaffoldMakeCommand;
+use Laralib\L5scaffold\Traits\MakerTrait;
+use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
 
-class MakeLayout {
+class MakeLayout extends BaseMake
+{
     use MakerTrait;
 
-    public function __construct(ScaffoldMakeCommand $scaffoldCommand, Filesystem $files)
+    function __construct(ScaffoldCommandInterface $command, Filesystem $files)
     {
-        $this->files = $files;
-        $this->scaffoldCommandObj = $scaffoldCommand;
+        parent::__construct($command, $files);
 
         $this->start();
     }
@@ -44,9 +45,9 @@ class MakeLayout {
             $html = $this->files->get($path_stub);
             $this->files->put($path_file, $html);
 
-            $this->scaffoldCommandObj->info("$name created successfully.");
+            $this->command->info("$name created successfully.");
         }else{
-            $this->scaffoldCommandObj->comment("Skip $name, because already exists.");
+            $this->command->comment("Skip $name, because already exists.");
         }
     }
 
