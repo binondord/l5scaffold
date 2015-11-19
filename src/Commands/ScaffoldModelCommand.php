@@ -43,11 +43,15 @@ class ScaffoldModelCommand extends ScaffoldCommand implements ScaffoldCommandInt
     {
         $scaffold = new Scaffold($this);
 
-        $scaffold->update();
+        $scaffold->createModels();
 
-        #$this->prepFire();
-        #$this->makeModel();
-        #$this->dumpAutoload();
+        $this->info('Please wait a few moments...');
+
+        $this->call('clear-compiled');
+
+        $this->call('optimize');
+
+        $this->info('Done!');
     }
 
     /**

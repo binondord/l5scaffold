@@ -12,6 +12,7 @@ use Laralib\L5scaffold\Makes\MakeModel;
 use Laralib\L5scaffold\Traits\CommonTrait;
 use Laralib\L5scaffold\Makes\MakeSeed;
 use Laralib\L5scaffold\Makes\MakeView;
+use Laralib\L5scaffold\Migrations\Scaffold;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
@@ -41,8 +42,19 @@ class ScaffoldUpdateCommand extends ScaffoldCommand implements ScaffoldCommandIn
      */
     public function fire()
     {
-        $this->prepUpdateFire();
-        $this->dumpAutoload();
+        $this->info('Updating...');
+
+        $scaffold = new Scaffold($this);
+
+        $scaffold->update();
+
+        $this->info('Finishing...');
+
+        $this->call('clear-compiled');
+
+        $this->call('optimize');
+
+        $this->info('Done!');
     }
 
     /**

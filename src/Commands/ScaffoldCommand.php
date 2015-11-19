@@ -3,6 +3,7 @@
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Composer;
+use Laralib\L5scaffold\Migrations\Scaffold;
 use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
