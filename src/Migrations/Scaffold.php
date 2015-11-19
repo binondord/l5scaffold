@@ -118,7 +118,7 @@ class Scaffold
 
         $configSettings = array();
 
-        $configSettings['pathTo'] = \Config::get("$package::paths");
+        $configSettings['pathTo'] = config("$package::paths");
 
         foreach($configSettings['pathTo'] as $pathName => $path)
         {
@@ -131,19 +131,19 @@ class Scaffold
             }
         }
 
-        $configSettings['names'] = \Config::get("$package::names");
+        $configSettings['names'] = config("$package::names");
 
-        $configSettings['appName'] = \Config::get("$package::appName");
+        $configSettings['appName'] = config("$package::appName");
 
-        $configSettings['downloads'] = \Config::get("$package::downloads");
+        $configSettings['downloads'] = config("$package::downloads");
 
-        $configSettings['views'] = \Config::get("$package::views");
+        $configSettings['views'] = config("$package::views");
 
-        $configSettings['useRepository'] = \Config::get("$package::repository");
+        $configSettings['useRepository'] = config("$package::repository");
 
-        $configSettings['useBaseRepository'] = \Config::get("$package::baseRepository");
+        $configSettings['useBaseRepository'] = config("$package::baseRepository");
 
-        $configSettings['modelDefinitionsFile'] = \Config::get("$package::modelDefinitionsFile");
+        $configSettings['modelDefinitionsFile'] = config("$package::modelDefinitionsFile");
 
         return $configSettings;
     }
@@ -347,7 +347,7 @@ class Scaffold
     {
         $classNames = array();
 
-        $aliases = \Config::get('app.aliases');
+        $aliases = config('app.aliases');
 
         foreach ($aliases as $alias => $facade)
         {
