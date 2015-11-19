@@ -11,6 +11,7 @@ use Laralib\L5scaffold\Makes\MakeModel;
 use Laralib\L5scaffold\Traits\CommonTrait;
 use Laralib\L5scaffold\Makes\MakeSeed;
 use Laralib\L5scaffold\Makes\MakeView;
+use Laralib\L5scaffold\Migrations\Scaffold;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
@@ -38,10 +39,14 @@ class ScaffoldModelCommand extends ScaffoldCommand implements ScaffoldCommandInt
      *
      * @return mixed
      */
-    public function handle()
+    public function fire()
     {
-        $this->prepFire();
-        $this->makeModel();
+        $scaffold = new Scaffold($this);
+
+        $scaffold->update();
+
+        #$this->prepFire();
+        #$this->makeModel();
         #$this->dumpAutoload();
     }
 
