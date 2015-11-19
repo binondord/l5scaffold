@@ -43,13 +43,13 @@ class [controller] extends Controller
 	public function update($id)
 	{
         $this->[model]->find($id)->update(\Input::only([repeat]'[property]',[/repeat]));
-        return redirect()->route('[model].show', $id);
+        return redirect()->route('[model].show', $id)->with('message', 'Item updated successfully.');
 	}
 
 	public function destroy($id)
 	{
         $this->[model]->destroy($id);
-        return redirect()->route('[model].index');
+        return redirect()->route('[model].index')->with('message', 'Item deleted successfully.');
 	}
 
 }
