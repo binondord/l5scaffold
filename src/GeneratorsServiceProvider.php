@@ -16,7 +16,11 @@ class GeneratorsServiceProvider extends ServiceProvider {
 	{
         $this->publishes([
             __DIR__.'/config/l5scaffold.php' => config_path('l5scaffold.php'),
-        ]);
+        ],'config');
+
+        $this->publishes([
+            __DIR__.'/templates/' => base_path('resources'),
+        ],'templates');
 
 	}
 
