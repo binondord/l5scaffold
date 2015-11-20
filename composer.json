@@ -8,7 +8,7 @@
     {
       "name": "Randy D. Binondo",
       "email": "binondord@gmail.com"
-    },
+    }
   ],
   "require": {
     "php": ">=5.4.0",
