@@ -1,5 +1,5 @@
 {
-  "name": "binondord/l5scaffold",
+  "name": "binondord/laravel-scaffold",
   "description": "Extend Laravel 5's generators scaffold. Base on jrenton/laravel-scaffold and laralib/l5scaffold",
   "keywords": ["laravel", "generators", "scaffold" , "laravel5"],
   "license": "MIT",
