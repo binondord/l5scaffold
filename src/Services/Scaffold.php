@@ -1,16 +1,20 @@
-<?php namespace Laralib\L5scaffold\Migrations;
+<?php namespace Binondord\LaravelScaffold\Services;
 
 use Illuminate\Console\Command;
 use Faker\Factory;
 use Illuminate\Filesystem\FileNotFoundException;
+use Binondord\LaravelScaffold\Contracts\AssetDownloaderInterface;
+use Binondord\LaravelScaffold\Contracts\ScaffoldCommandInterface;
+use Binondord\LaravelScaffold\Contracts\FileCreatorInterface;
+use Binondord\LaravelScaffold\Contracts\Services\ScaffoldInterface;
 
 /**
  * From Jrenton
  * Class Scaffold
- * @package Laralib\L5scaffold\Migrations
+ * @package Binondord\LaravelScaffold\Migrations
  */
 
-class Scaffold
+class Scaffold implements ScaffoldInterface
 {
     /**
      * @var array
@@ -58,7 +62,7 @@ class Scaffold
     protected $configSettings;
 
     /**
-     * @var \Illuminate\Console\Command
+     * @var \Binondord\LaravelScaffold\Contracts\ScaffoldCommandInterface;
      */
     protected $command;
 
@@ -99,12 +103,24 @@ class Scaffold
      */
     private $models = array();
 
-    public function __construct(Command $command)
+    private $configFields = array(
+        'names',
+        'appName',
+        'downloads',
+        'views',
+        'repository',
+        'baseRepository',
+        'modelDefinitionsFile'
+    );
+
+    public function __construct(ScaffoldCommandInterface $command)
     {
         $this->configSettings = $this->getConfigSettings();
         $this->command = $command;
-        $this->fileCreator = new FileCreator($command);
-        $this->assetDownloader = new AssetDownloader($command, $this->configSettings, $this->fileCreator);
+        $this->fileCreator = app(FileCreatorInterface::class,[$command]);
+        $this->assetDownloader = app(AssetDownloaderInterface::class,[$command, $this->fileCreator]);
+        $this->assetDownloader->setConfigSettings($this->configSettings);
+
     }
 
     /**
@@ -131,19 +147,10 @@ class Scaffold
             }
         }
 
-        $configSettings['names'] = config("$package.names");
-
-        $configSettings['appName'] = config("$package.appName");
-
-        $configSettings['downloads'] = config("$package.downloads");
-
-        $configSettings['views'] = config("$package.views");
-
-        $configSettings['useRepository'] = config("$package.repository");
-
-        $configSettings['useBaseRepository'] = config("$package.baseRepository");
-
-        $configSettings['modelDefinitionsFile'] = config("$package.modelDefinitionsFile");
+        foreach($this->configFields as $configField)
+        {
+            $configSettings[$configField] = config("$package.$configField");
+        }
 
         return $configSettings;
     }
@@ -167,11 +174,11 @@ class Scaffold
         {
             $this->saveModelAndProperties($modelAndProperties, array());
 
-            $this->isResource = $this->command->confirm('Do you want resource (y) or restful (n) controllers? ');
+            $this->isResource = $this->confirm('Do you want resource (y) or restful (n) controllers? ');
 
             $this->createFiles();
 
-            $this->command->info("Model ".$this->model->upper(). " and all associated files created successfully!");
+            $this->info("Model ".$this->model->upper(). " and all associated files created successfully!");
 
             $this->addToModelDefinitions($modelAndProperties);
 
@@ -566,7 +573,7 @@ class Scaffold
                     continue;
                 else
                 {
-                    $editRelatedModel = $this->command->confirm("Model " . $relatedModel->upper() . " doesn't exist yet. Would you like to create it now [y/n]? ", true);
+                    $editRelatedModel = $this->confirm("Model " . $relatedModel->upper() . " doesn't exist yet. Would you like to create it now [y/n]? ", true);
 
                     if ($editRelatedModel)
                         $this->fileCreator->createClass($relatedModelFile, "", array('name' => "\\Eloquent"));
@@ -663,7 +670,7 @@ class Scaffold
     private function copyTemplateFiles()
     {
         if(!\File::isDirectory($this->configSettings['pathTo']['templates']))
-            $this->fileCreator->copyDirectory("vendor/jrenton/laravel-scaffold/src/Jrenton/LaravelScaffold/templates/", $this->configSettings['pathTo']['templates']);
+            $this->fileCreator->copyDirectory("vendor/laralib/l5scaffold/src/Binondord/LaravelScaffold/templates/", $this->configSettings['pathTo']['templates']);
     }
 
     /**
@@ -671,10 +678,10 @@ class Scaffold
      */
     private function showInformation()
     {
-        $this->command->info('MyNamespace\Book title:string year:integer');
-        $this->command->info('With relation: Book belongsTo Author title:string published:integer');
-        $this->command->info('Multiple relations: University hasMany Course, Department name:string city:string state:string homepage:string )');
-        $this->command->info('Or group like properties: University hasMany Department string( name city state homepage )');
+        $this->info('MyNamespace\Book title:string year:integer');
+        $this->info('With relation: Book belongsTo Author title:string published:integer');
+        $this->info('Multiple relations: University hasMany Course, Department name:string city:string state:string homepage:string )');
+        $this->info('Or group like properties: University hasMany Department string( name city state homepage )');
     }
 
     /**
@@ -684,12 +691,12 @@ class Scaffold
     {
         if(!$this->fromFile)
         {
-            $editMigrations = $this->command->confirm('Would you like to edit your migrations file before running it [y/n]? ', true);
+            $editMigrations = $this->confirm('Would you like to edit your migrations file before running it [y/n]? ', true);
 
             if ($editMigrations)
             {
-                $this->command->info('Remember to run "php artisan migrate" after editing your migration file');
-                $this->command->info('And "php artisan db:seed" after editing your seed file');
+                $this->info('Remember to run "php artisan migrate" after editing your migration file');
+                $this->info('And "php artisan db:seed" after editing your seed file');
             }
             else
             {
@@ -703,9 +710,9 @@ class Scaffold
                     }
                     catch (\Exception $e)
                     {
-                        $this->command->info('Error: ' . $e->getMessage());
+                        $this->info('Error: ' . $e->getMessage());
                         $this->command->error('This table already exists and/or you have duplicate migration files.');
-                        $this->command->confirm('Fix the error and enter "yes" ', true);
+                        $this->confirm('Fix the error and enter "yes" ', true);
                     }
                 }
             }
@@ -1017,7 +1024,12 @@ class Scaffold
      */
     private function replaceModels($fileContents)
     {
-        $modelReplaces = array('[model]'=>$this->model->lower(), '[Model]'=>$this->model->upper(), '[models]'=>$this->model->plural(), '[Models]'=>$this->model->upperPlural());
+        $modelReplaces = array(
+            '[model]'   =>$this->model->lower(),
+            '[Model]'   =>$this->model->upper(),
+            '[models]'  =>$this->model->plural(),
+            '[Models]'  =>$this->model->upperPlural()
+        );
 
         foreach($modelReplaces as $model => $name)
             $fileContents = str_replace($model, $name, $fileContents);
@@ -1073,5 +1085,21 @@ class Scaffold
         }
 
         return $fileContents;
+    }
+
+    /*************** Start command wrappers *******************/
+    /**
+     *
+     * @param $message
+     */
+
+    public function info($message)
+    {
+        $this->command->info($message);
+    }
+
+    public function confirm($message)
+    {
+        $this->command->confirm($message);
     }
 }

@@ -1,4 +1,4 @@
-<?php namespace Laralib\L5scaffold\Migrations;
+<?php namespace Binondord\LaravelScaffold\Migrations;
 
 class BaseModel
 {
@@ -64,7 +64,7 @@ class BaseModel
      * @param $modelName
      * @param string $namespace
      */
-    public function generateModelName($modelName, $namespace = "")
+    public function generateModelName($modelName, $namespace = "\\App\\Models\\")
     {
         $this->originalName = strtolower($modelName);
         $this->tableName = str_plural(strtolower($modelName));

@@ -1,4 +1,4 @@
-<?php namespace Laralib\L5scaffold\Traits;
+<?php namespace Binondord\LaravelScaffold\Traits;
 
 trait CommandTrait{
 	

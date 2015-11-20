@@ -1,12 +1,12 @@
-<?php namespace Laralib\L5scaffold\Makes;
+<?php namespace Binondord\LaravelScaffold\Makes;
 
 use Illuminate\Console\AppNamespaceDetectorTrait;
 use Illuminate\Filesystem\Filesystem;
-use Laralib\L5scaffold\Commands\ScaffoldMakeCommand;
-use Laralib\L5scaffold\Migrations\SchemaParser;
-use Laralib\L5scaffold\Migrations\SyntaxBuilder;
-use Laralib\L5scaffold\Traits\MakerTrait;
-use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
+use Binondord\LaravelScaffold\Commands\ScaffoldMakeCommand;
+use Binondord\LaravelScaffold\Migrations\SchemaParser;
+use Binondord\LaravelScaffold\Migrations\SyntaxBuilder;
+use Binondord\LaravelScaffold\Traits\MakerTrait;
+use Binondord\LaravelScaffold\Contracts\ScaffoldCommandInterface;
 
 class MakeController extends BaseMake
 {

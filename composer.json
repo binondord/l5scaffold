@@ -1,14 +1,14 @@
 {
-  "name": "laralib/l5scaffold",
-  "description": "Extend Laravel 5's generators scaffold.",
+  "name": "binondord/l5scaffold",
+  "description": "Extend Laravel 5's generators scaffold. Base on jrenton/laravel-scaffold and laralib/l5scaffold",
   "keywords": ["laravel", "generators", "scaffold" , "laravel5"],
   "license": "MIT",
   "minimum-stability": "dev",
   "authors": [
     {
-      "name": "Fernando Brito",
-      "email": "fernandobritofl@gmail.com"
-    }
+      "name": "Randy D. Binondo",
+      "email": "binondord@gmail.com"
+    },
   ],
   "require": {
     "php": ">=5.4.0",
@@ -17,7 +17,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Laralib\\L5scaffold\\": "src/"
+      "Binondord\\LaravelScaffold\\": "src/"
     }
   }
 }

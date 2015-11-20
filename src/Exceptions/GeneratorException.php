@@ -1,6 +1,6 @@
 <?php
 
-namespace Laralib\L5scaffold;
+namespace Binondord\LaravelScaffold\Exceptions;
 
 class GeneratorException extends \Exception {
 

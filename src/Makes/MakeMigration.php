@@ -6,14 +6,14 @@
  * Time: 10:34 PM
  */
 
-namespace Laralib\L5scaffold\Makes;
+namespace Binondord\LaravelScaffold\Makes;
 
 
 use Illuminate\Filesystem\Filesystem;
-use Laralib\L5scaffold\Migrations\SchemaParser;
-use Laralib\L5scaffold\Migrations\SyntaxBuilder;
-use Laralib\L5scaffold\Traits\MakerTrait;
-use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
+use Binondord\LaravelScaffold\Migrations\SchemaParser;
+use Binondord\LaravelScaffold\Migrations\SyntaxBuilder;
+use Binondord\LaravelScaffold\Traits\MakerTrait;
+use Binondord\LaravelScaffold\Contracts\ScaffoldCommandInterface;
 
 class MakeMigration extends BaseMake
 {

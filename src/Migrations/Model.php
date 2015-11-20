@@ -1,9 +1,9 @@
-<?php namespace Laralib\L5scaffold\Migrations;
+<?php namespace Binondord\LaravelScaffold\Migrations;
 
 /**
  * From Jrenton
  * Class Model
- * @package Laralib\L5scaffold\Migrations
+ * @package Binondord\LaravelScaffold\Migrations
  */
 
 use Illuminate\Console\Command;

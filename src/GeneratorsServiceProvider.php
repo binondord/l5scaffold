@@ -1,6 +1,6 @@
 <?php
 
-namespace Laralib\L5scaffold;
+namespace Binondord\LaravelScaffold;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\ServiceProvider;
@@ -31,10 +31,55 @@ class GeneratorsServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-
+        $this->customBindings();
 		$this->registerScaffoldGenerator();
 
+
 	}
+
+    private function customBindings()
+    {
+        $usePrefix = [
+            'Make'
+        ];
+
+        $customBindings = [
+            'Service' => [
+                'Scaffold'
+            ],
+            'Make' => [
+                'Controller',
+                'Layout',
+                'Migration',
+                'Seed',
+                'View',
+            ],
+            'Migration' => [
+                'AssetDownloader',
+                'BaseModel',
+                'FileCreator',
+                'Migration',
+                'Model',
+                'NameParser',
+                'Relation',
+                'SchemaParser',
+                'SyntaxBuilder'
+            ]
+        ];
+
+        foreach($customBindings as $group => $customBinding)
+        {
+            foreach($customBinding as $unit)
+            {
+                $unit = in_array($group, $usePrefix) ? $group.$unit : $unit;
+
+                $class = __NAMESPACE__ ."\\".$group."s"."\\".$unit;
+                $contract = __NAMESPACE__ ."\\Contracts\\".$group."s\\".$unit."Interface";
+
+                $this->app->bind($contract, $class);
+            }
+        }
+    }
 
 
 	/**
@@ -43,7 +88,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
     private function registerScaffoldGenerator()
     {
         $nameBase = 'command.larascaf.';
-        $namespace = 'Laralib\\L5scaffold\\Commands\\';
+        $namespace = 'Binondord\\LaravelScaffold\\Commands\\';
 
         $commands = [
             'make',

@@ -1,6 +1,6 @@
-<?php namespace Laralib\L5scaffold\Makes;
+<?php namespace Binondord\LaravelScaffold\Makes;
 
-use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
+use Binondord\LaravelScaffold\Contracts\ScaffoldCommandInterface;
 use Illuminate\Filesystem\Filesystem;
 
 class BaseMake

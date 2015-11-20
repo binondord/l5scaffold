@@ -6,12 +6,12 @@
  * Time: 10:34 PM
  */
 
-namespace Laralib\L5scaffold\Makes;
+namespace Binondord\LaravelScaffold\Makes;
 
 
 use Illuminate\Filesystem\Filesystem;
-use Laralib\L5scaffold\Commands\ScaffoldMakeCommand;
-use Laralib\L5scaffold\Traits\MakerTrait;
+use Binondord\LaravelScaffold\Commands\ScaffoldMakeCommand;
+use Binondord\LaravelScaffold\Traits\MakerTrait;
 
 class MakeSeed extends BaseMake
 {
