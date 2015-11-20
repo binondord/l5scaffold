@@ -6,14 +6,14 @@
  * Time: 4:58 PM
  */
 
-namespace Laralib\L5scaffold\Makes;
+namespace Binondord\LaravelScaffold\Makes;
 
 
 use Illuminate\Filesystem\Filesystem;
-use Laralib\L5scaffold\Migrations\SchemaParser;
-use Laralib\L5scaffold\Migrations\SyntaxBuilder;
-use Laralib\L5scaffold\Traits\MakerTrait;
-use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
+use Binondord\LaravelScaffold\Migrations\SchemaParser;
+use Binondord\LaravelScaffold\Migrations\SyntaxBuilder;
+use Binondord\LaravelScaffold\Traits\MakerTrait;
+use Binondord\LaravelScaffold\Contracts\ScaffoldCommandInterface;
 
 class MakeView extends BaseMake
 {
@@ -115,9 +115,9 @@ class MakeView extends BaseMake
      */
     protected function replaceName(&$stub)
     {
-        $stub = str_replace('{{Class}}', $this->scaffoldCommandObj->getObjName('Names'), $stub);
-        $stub = str_replace('{{class}}', $this->scaffoldCommandObj->getObjName('names'), $stub);
-        $stub = str_replace('{{classSingle}}', $this->scaffoldCommandObj->getObjName('name'), $stub);
+        $stub = str_replace('{{Class}}', $this->command->getObjName('Names'), $stub);
+        $stub = str_replace('{{class}}', $this->command->getObjName('names'), $stub);
+        $stub = str_replace('{{classSingle}}', $this->command->getObjName('name'), $stub);
 
         return $this;
     }
@@ -135,18 +135,18 @@ class MakeView extends BaseMake
     protected function replaceSchemaIndex(&$stub)
     {
 
-        if ($schema = $this->scaffoldCommandObj->option('schema')) {
+        if ($schema = $this->command->option('schema')) {
             $schemaArray = (new SchemaParser)->parse($schema);
         }
 
 
         // Create view index header fields
-        $schema = (new SyntaxBuilder)->create($schemaArray, $this->scaffoldCommandObj->getMeta(), 'view-index-header');
+        $schema = (new SyntaxBuilder)->create($schemaArray, $this->command->getMeta(), 'view-index-header');
         $stub = str_replace('{{header_fields}}', $schema, $stub);
 
 
         // Create view index content fields
-        $schema = (new SyntaxBuilder)->create($schemaArray, $this->scaffoldCommandObj->getMeta(), 'view-index-content');
+        $schema = (new SyntaxBuilder)->create($schemaArray, $this->command->getMeta(), 'view-index-content');
         $stub = str_replace('{{content_fields}}', $schema, $stub);
 
 
@@ -166,13 +166,13 @@ class MakeView extends BaseMake
     protected function replaceSchemaShow(&$stub)
     {
 
-        if ($schema = $this->scaffoldCommandObj->option('schema')) {
+        if ($schema = $this->command->option('schema')) {
             $schemaArray = (new SchemaParser)->parse($schema);
         }
 
 
         // Create view index content fields
-        $schema = (new SyntaxBuilder)->create($schemaArray, $this->scaffoldCommandObj->getMeta(), 'view-show-content');
+        $schema = (new SyntaxBuilder)->create($schemaArray, $this->command->getMeta(), 'view-show-content');
         $stub = str_replace('{{content_fields}}', $schema, $stub);
 
 
@@ -189,13 +189,13 @@ class MakeView extends BaseMake
     private function replaceSchemaEdit(&$stub)
     {
 
-        if ($schema = $this->scaffoldCommandObj->option('schema')) {
+        if ($schema = $this->command->option('schema')) {
             $schemaArray = (new SchemaParser)->parse($schema);
         }
 
 
         // Create view index content fields
-        $schema = (new SyntaxBuilder)->create($schemaArray, $this->scaffoldCommandObj->getMeta(), 'view-edit-content', $this->scaffoldCommandObj->option('form'));
+        $schema = (new SyntaxBuilder)->create($schemaArray, $this->command->getMeta(), 'view-edit-content', $this->command->option('form'));
         $stub = str_replace('{{content_fields}}', $schema, $stub);
 
 
@@ -213,13 +213,13 @@ class MakeView extends BaseMake
     private function replaceSchemaCreate(&$stub)
     {
 
-        if ($schema = $this->scaffoldCommandObj->option('schema')) {
+        if ($schema = $this->command->option('schema')) {
             $schemaArray = (new SchemaParser)->parse($schema);
         }
 
 
         // Create view index content fields
-        $schema = (new SyntaxBuilder)->create($schemaArray, $this->scaffoldCommandObj->getMeta(), 'view-create-content', $this->scaffoldCommandObj->option('form'));
+        $schema = (new SyntaxBuilder)->create($schemaArray, $this->command->getMeta(), 'view-create-content', $this->command->option('form'));
         $stub = str_replace('{{content_fields}}', $schema, $stub);
 
 

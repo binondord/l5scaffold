@@ -1,21 +1,21 @@
 <?php
 
-namespace Laralib\L5scaffold\Commands;
+namespace Binondord\LaravelScaffold\Commands;
 
 use Illuminate\Console\AppNamespaceDetectorTrait;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Composer;
-use Laralib\L5scaffold\Makes\MakeController;
-use Laralib\L5scaffold\Makes\MakeLayout;
-use Laralib\L5scaffold\Makes\MakeMigration;
-use Laralib\L5scaffold\Makes\MakeModel;
-use Laralib\L5scaffold\Traits\CommonTrait;
-use Laralib\L5scaffold\Makes\MakeSeed;
-use Laralib\L5scaffold\Makes\MakeView;
-use Laralib\L5scaffold\Migrations\Scaffold;
+use Binondord\LaravelScaffold\Makes\MakeController;
+use Binondord\LaravelScaffold\Makes\MakeLayout;
+use Binondord\LaravelScaffold\Makes\MakeMigration;
+use Binondord\LaravelScaffold\Makes\MakeModel;
+use Binondord\LaravelScaffold\Traits\CommonTrait;
+use Binondord\LaravelScaffold\Makes\MakeSeed;
+use Binondord\LaravelScaffold\Makes\MakeView;
+use Binondord\LaravelScaffold\Migrations\Scaffold;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Laralib\L5scaffold\Contracts\ScaffoldCommandInterface;
+use Binondord\LaravelScaffold\Contracts\ScaffoldCommandInterface;
 
 class ScaffoldUpdateCommand extends ScaffoldCommand implements ScaffoldCommandInterface
 {

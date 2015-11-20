@@ -1,10 +1,10 @@
 <?php
 
-namespace Laralib\L5scaffold\Migrations;
+namespace Binondord\LaravelScaffold\Migrations;
 
 /**
  * Class SchemaParser with modifications by Fernando
- * @package Laralib\L5scaffold\Migrations
+ * @package Binondord\LaravelScaffold\Migrations
  * @author Jeffrey Way <jeffrey@jeffrey-way.com>
  */
 class SchemaParser

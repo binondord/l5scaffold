@@ -1,7 +1,7 @@
-<?php namespace Laralib\L5scaffold\Traits;
+<?php namespace Binondord\LaravelScaffold\Traits;
 
 use Illuminate\Filesystem\Filesystem;
-use Laralib\L5scaffold\Commands\ScaffoldMakeCommand;
+use Binondord\LaravelScaffold\Commands\ScaffoldMakeCommand;
 
 trait MakerTrait {
 

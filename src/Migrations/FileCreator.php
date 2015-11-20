@@ -1,14 +1,16 @@
-<?php namespace Laralib\L5scaffold\Migrations;
+<?php namespace Binondord\LaravelScaffold\Migrations;
 
 use Illuminate\Console\Command;
+use Binondord\LaravelScaffold\Contracts\FileCreatorInterface;
+use Binondord\LaravelScaffold\Contracts\ScaffoldCommandInterface;
 
 /**
  * From Jrenton\LaravelScaffold\FileCreator
  * Class FileCreator
- * @package Laralib\L5scaffold\Migrations\
+ * @package Binondord\LaravelScaffold\Migrations\
  */
 
-class FileCreator
+class FileCreator implements FileCreatorInterface
 {
     /**
      * @var \Illuminate\Console\Command
@@ -28,7 +30,7 @@ class FileCreator
     /**
      * @param Command $command
      */
-    public function __construct(Command $command)
+    public function __construct(ScaffoldCommandInterface $command)
     {
         $this->command = $command;
     }

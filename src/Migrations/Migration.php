@@ -1,9 +1,9 @@
-<?php namespace Laralib\L5scaffold\Migrations;
+<?php namespace Binondord\LaravelScaffold\Migrations;
 
 /**
  * From Jrenton/scaffold
  * Class Migration
- * @package Laralib\L5scaffold\Migrations
+ * @package Binondord\LaravelScaffold\Migrations
  */
 
 class Migration

@@ -1,10 +1,10 @@
 <?php
 
-namespace Laralib\L5scaffold\Migrations;
+namespace Binondord\LaravelScaffold\Migrations;
 
 /**
  * Class NameParser
- * @package Laralib\L5scaffold\Migrations with modifications by Fernando
+ * @package Binondord\LaravelScaffold\Migrations with modifications by Fernando
  * @author Jeffrey Way <jeffrey@jeffrey-way.com>
  */
 class NameParser

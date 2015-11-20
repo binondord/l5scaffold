@@ -18,7 +18,7 @@ composer require 'laralib/l5scaffold' --dev
 Open `config/app.php` and, to your **providers** array at the bottom, add:
 
 ```
-"Laralib\L5scaffold\GeneratorsServiceProvider"
+"Binondord\LaravelScaffold\GeneratorsServiceProvider"
 ```
 
 ### Step 3: Publish vendor assets, config and templates

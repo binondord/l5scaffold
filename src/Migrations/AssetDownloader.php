@@ -1,14 +1,17 @@
-<?php namespace Laralib\L5scaffold\Migrations;
+<?php namespace Binondord\LaravelScaffold\Migrations;
 
 use Illuminate\Console\Command;
+use Binondord\LaravelScaffold\Contracts\AssetDownloaderInterface;
+use Binondord\LaravelScaffold\Contracts\ScaffoldCommandInterface;
+use Binondord\LaravelScaffold\Contracts\FileCreatorInterface;
 
 /**
  * From Jrenton\LaravelScaffold\AssetDownloader
  * Class AssetDownloader
- * @package Laralib\L5scaffold\Migrations
+ * @package Binondord\LaravelScaffold\Migrations
  */
 
-class AssetDownloader
+class AssetDownloader implements AssetDownloaderInterface
 {
     /**
      * @var \Illuminate\Console\Command
@@ -40,11 +43,15 @@ class AssetDownloader
      * @param array $configSettings
      * @param FileCreator $fileCreator
      */
-    public function __construct(Command $command, array $configSettings, FileCreator $fileCreator)
+    public function __construct(ScaffoldCommandInterface $command, FileCreatorInterface $fileCreator)
     {
         $this->command = $command;
-        $this->configSettings = $configSettings;
         $this->fileCreator = $fileCreator;
+    }
+
+    public function setConfigSettings(array $configSettings)
+    {
+        $this->configSettings = $configSettings;
     }
 
     /**

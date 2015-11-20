@@ -27,8 +27,8 @@ return array(
 	|
 	*/
 
-    'repository' => true,
-    'baseRepository' => true,
+    'useRepository' => true,
+    'useBaseRepository' => true,
 
     /*
 	|--------------------------------------------------------------------------

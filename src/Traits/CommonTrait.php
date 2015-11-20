@@ -1,11 +1,11 @@
 <?php
 
-namespace Laralib\L5scaffold\Traits;
+namespace Binondord\LaravelScaffold\Traits;
 
-use Laralib\L5scaffold\Makes\MakeModel;
+use Binondord\LaravelScaffold\Makes\MakeModel;
 
 trait CommonTrait {
-    protected $commandContract = Laralib\L5scaffold\Contracts\ScaffoldCommandInterface::class;
+    protected $commandContract = Binondord\LaravelScaffold\Contracts\ScaffoldCommandInterface::class;
 
     protected function useUtf8Encoding($argument)
     {
